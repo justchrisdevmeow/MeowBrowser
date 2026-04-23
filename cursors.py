@@ -24,9 +24,10 @@ class CursorLoader:
             left_paw = left_paw.scaled(48, 48, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             right_paw = right_paw.scaled(48, 48, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             
-            # Create cursors
-            self.click_cursor = QCursor(left_paw, hotX=24, hotY=24)
-            self.normal_cursor = QCursor(right_paw, hotX=24, hotY=24)
+            # Adjust hot spot - move down to fix the "too high" issue
+            # Try hotY=40 (near bottom of cursor) instead of 24 (center)
+            self.click_cursor = QCursor(left_paw, hotX=24, hotY=40)
+            self.normal_cursor = QCursor(right_paw, hotX=24, hotY=40)
             
         except Exception as e:
             print(f"Could not load paw_cursor.png: {e}")
