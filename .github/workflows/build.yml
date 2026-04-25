@@ -1,4 +1,4 @@
-name: Build MeowBrowser (Nuitka)
+name: Build MeowBrowser
 
 on:
   push:
@@ -15,18 +15,27 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.9'
       
       - name: Install dependencies
         run: |
           pip install PyQt5 PyQtWebEngine
-          pip install nuitka zstandard
+          pip install pyinstaller
       
-      - name: Build with Nuitka
+      - name: Build
         run: |
-          nuitka --standalone --onefile --windows-console-mode=disable --enable-plugin=pyqt5 --include-data-dir=resources=resources main.py --output-filename=MeowBrowser.exe
+          pyinstaller --onefile --windowed --name MeowBrowser `
+            --hidden-import PyQt5.sip `
+            --hidden-import PyQt5.QtCore `
+            --hidden-import PyQt5.QtGui `
+            --hidden-import PyQt5.QtWidgets `
+            --hidden-import PyQt5.QtWebEngineWidgets `
+            --hidden-import PyQt5.QtWebEngine `
+            --hidden-import PyQt5.QtWebChannel `
+            --add-data "resources/paw_cursor.png;resources" `
+            main.py
       
       - uses: actions/upload-artifact@v4
         with:
           name: MeowBrowser
-          path: MeowBrowser.exe
+          path: dist/MeowBrowser.exe
