@@ -24,7 +24,7 @@ jobs:
       
       - name: Build with Nuitka
         run: |
-          nuitka --standalone --onefile --windows-console-mode=disable --enable-plugin=pyqt5 --force-download-dependency-walker --include-data-dir=resources=resources main.py --output-filename=MeowBrowser.exe
+          nuitka --standalone --onefile --windows-console-mode=disable --enable-plugin=pyqt5 --include-data-dir=resources=resources main.py --output-filename=MeowBrowser.exe
       
       - uses: actions/upload-artifact@v4
         with:
